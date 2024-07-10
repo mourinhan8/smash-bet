@@ -1,0 +1,20 @@
+
+SET NAMES utf8mb4;
+
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE
+IF
+	EXISTS `chat_message`;
+CREATE TABLE `chat_message` (
+	`id` BIGINT NOT NULL AUTO_INCREMENT,
+	`sender_id` BIGINT NOT NULL,
+	`text` TEXT NOT NULL,	
+	`created_at` BIGINT NULL DEFAULT NULL,
+	`updated_at` BIGINT NULL DEFAULT NULL,
+	PRIMARY KEY ( `id` ) USING BTREE,		
+	INDEX `sender_id` ( `sender_id`) USING BTREE,	
+	CONSTRAINT `chat_message_sender_id` FOREIGN KEY ( `sender_id` ) REFERENCES `users` ( `id` ) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = INNODB AUTO_INCREMENT = 1 CHARACTER 
+SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;

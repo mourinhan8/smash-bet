@@ -1,0 +1,30 @@
+
+SET NAMES utf8mb4;
+
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE
+IF
+	EXISTS `transactions`;
+CREATE TABLE `transactions` (
+	`id` BIGINT NOT NULL AUTO_INCREMENT,
+	`user_id` BIGINT NOT NULL,
+	`wallet_id` BIGINT NOT NULL,	
+	`token_id` BIGINT NOT NULL,
+	`type` ENUM('deposit','withdraw','bet','reward','referral','redeem') NULL DEFAULT NULL,
+	`message` VARCHAR ( 200 ) NULL DEFAULT NULL,
+	`value` DECIMAL ( 24, 10 ) NOT NULL,
+	`fee` DECIMAL ( 24, 10 ) NULL DEFAULT 0.0000000000,
+	`tx_hash` VARCHAR ( 200 ) NULL DEFAULT NULL,
+	`pre_balance` BIGINT NOT NULL DEFAULT 0.0000000000,
+	`post_balance` BIGINT NOT NULL DEFAULT 0.0000000000,
+	`created_at` BIGINT NULL DEFAULT NULL,
+	`updated_at` BIGINT NULL DEFAULT NULL,
+	PRIMARY KEY ( `id` ) USING BTREE,		
+	INDEX `user_id` ( `user_id`) USING BTREE,
+	INDEX `wallet_id` ( `wallet_id`) USING BTREE,
+	CONSTRAINT `user_id_FK` FOREIGN KEY ( `user_id` ) REFERENCES `users` ( `id` ) ON DELETE RESTRICT ON UPDATE RESTRICT,
+	CONSTRAINT `wallet_id_FK` FOREIGN KEY ( `wallet_id` ) REFERENCES `wallets` ( `id` ) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = INNODB AUTO_INCREMENT = 1 CHARACTER 
+SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
